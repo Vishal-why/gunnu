@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mujhe Maaf Kar Do</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500, #ff69b4, #ff1493);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 650px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            animation: slideIn 1s ease-out;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 182, 193, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        h1 {
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .emoji-row {
+            font-size: 2.5em;
+            margin: 20px 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .message {
+            font-size: 1.3em;
+            line-height: 2;
+            color: #333;
+            margin: 30px 0;
+            text-align: left;
+            background: linear-gradient(to right, rgba(255, 182, 193, 0.1), rgba(255, 192, 203, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #ff69b4;
+        }
+
+        .message p {
+            margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .message p:nth-child(1) { animation-delay: 0.2s; }
+        .message p:nth-child(2) { animation-delay: 0.4s; }
+        .message p:nth-child(3) { animation-delay: 0.6s; }
+        .message p:nth-child(4) { animation-delay: 0.8s; }
+        .message p:nth-child(5) { animation-delay: 1s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signature {
+            margin-top: 35px;
+            font-style: italic;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .forgive-btn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .forgive-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6);
+        }
+
+        .forgive-btn:active {
+            transform: scale(0.95);
+        }
+
+        .click-message {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #ff1493;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .click-message.show {
+            opacity: 1;
+            animation: pop 0.5s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 1.5em;
+            animation: sparkleAnim 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1) rotate(180deg);
+            }
+        }
+
+        .special-line {
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-heart" style="left: 10%; top: 20%; animation-delay: 0s;">💖</div>
+    <div class="floating-heart" style="right: 15%; top: 30%; animation-delay: 1s;">💕</div>
+    <div class="floating-heart" style="left: 20%; bottom: 25%; animation-delay: 2s;">💗</div>
+    <div class="floating-heart" style="right: 10%; bottom: 35%; animation-delay: 3s;">💝</div>
+    <div class="floating-heart" style="left: 50%; top: 10%; animation-delay: 4s;">❤️</div>
+
+    <div class="container">
+        <h1>Mujhe Maaf Kar Do <span style="font-size: 0.8em;">😔</span></h1>
+        
+        <div class="emoji-row">💐 🌹 💖 🌸 💐 🌹 💖 🌸</div>
+        
+        <div class="message">
+            <p>Baby, maine tumhe hurt kiya aur maine bohot galat kiya. <span class="special-line">Mujhe bahut afsos hai</span> aur main chahta hoon ki tum mujhe maaf kar do.</p>
+            
+            <p>Tum mere liye sab kuch ho, aur jab maine tumhe upset dekha toh <span class="special-line">mera dil tut gaya</span>. Main apni galti accept karta hoon aur main promise karta hoon ki main better karunga.</p>
+            
+            <p>Please samjho ki main tumse <span class="special-line">bahut pyaar karta hoon</span>. Main yahan hoon tumhari baat sunne ke liye, tumhe samajhne ke liye, aur sab theek karne ke liye. Tumhari khushi meri priority hai.</p>
+            
+            <p>Main chahta hoon ki tum hamesha smile karo, hamesha khush raho. <span class="special-line">Tumhara dard mera dard hai</span>, aur main hamesha tumhare saath hoon.</p>
+            
+            <p>Please mujhe ek chance do. Main tumse baat karna chahta hoon jab bhi tum ready ho. <span class="special-line">Tumhare bina main kuch bhi nahi hoon</span>.</p>
+        </div>
+        
+        <div class="emoji-row">🌹 💖 🌸 💐 🌹 💖 🌸 💐</div>
+        
+        <button class="forgive-btn" onclick="showMessage()">Please Maaf Kar Do 🙏</button>
+        
+        <div class="click-message" id="clickMsg">
+            <p>Thank you baby! Main hamesha tumhare saath rahunga ❤️</p>
+        </div>
+        
+        <div class="signature">
+            <p>Tumhara forever,</p>
+            <p style="margin-top: 10px;">Tumhara pyaar ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            const msg = document.getElementById('clickMsg');
+            msg.classList.add('show');
+            
+            // Create sparkles
+            for(let i = 0; i < 10; i++) {
+                createSparkle();
+            }
+        }
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = '✨';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        // Add click effect on container
+        document.querySelector('.container').addEventListener('click', function(e) {
+            if(e.target.classList.contains('forgive-btn')) return;
+            createSparkle();
+        });
+
+        // Continuous floating hearts
+        setInterval(() => {
+            const hearts = ['💖', '💕', '💗', '💝', '❤️', '💓', '💞'];
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = '100%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }, 2000);
+    </script>
+</body>
+</html>
